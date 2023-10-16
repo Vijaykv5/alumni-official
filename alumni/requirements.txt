@@ -1,5 +1,4 @@
-asgi-redis==1.4.3
-asgiref==3.7.2
+asgiref
 attrs==23.1.0
 autobahn==23.6.2
 Automat==22.10.0
@@ -31,7 +30,6 @@ pycparser==2.21
 Pygments==2.16.1
 pyOpenSSL==23.2.0
 pytz==2023.3.post1
-redis==5.0.0
 serializers==0.2.4
 service-identity==23.1.0
 six==1.16.0
