@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}Djangochat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .messages {
+            height: 400px;
+            overflow-y: auto;
+        }
+        .bg-teal-600 {
+            background-color: #C8ACAC;
+        }
+    </style>
+</head>
+<body class="bg-teal-600">
+<nav class="flex items-center justify-between px-4 py-6 bg-teal-800">
+    <div>
+        <a href="/" class="text-xl text-white">Djangochat</a>
+    </div>
+
+    <div class="flex items-center space-x-4">
+        {% if request.user.is_authenticated %}
+            <span class="text-white">Logged in as: {{ request.user.username }}</span>
+            <a href="/rooms/" class="text-white hover:text-gray-200">Rooms</a>
+            <button onclick="initiatePersonalChat()" class="px-5 py-3 rounded-xl text-white bg-teal-600 hover:bg-teal-700">Initiate Personal Chat</button>
+            <a href="/logout/" class="px-5 py-3 rounded-xl text-white bg-teal-600 hover:bg-teal-700">Log out</a>
+        {% else %}
+            <a href="/login/" class="text-white hover:text-gray-200">Log in</a>
+            <a href="/signup/" class="px-5 py-3 rounded-xl text-white bg-teal-600 hover:bg-teal-700">Sign up</a>
+        {% endif %}
+    </div>
+</nav>
+
+{% block content %}
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        function initiatePersonalChat() {
+            console.log('Initiating personal chat...');
+
+            const recipientUsername = prompt("Enter the recipient's username for the personal chat:");
+            console.log('Recipient Username:', recipientUsername);
+
+            if (recipientUsername) {
+                const csrfTokenInput = document.querySelector('input[name="csrfmiddlewaretoken"]');
+                if (csrfTokenInput) {
+                    const csrf_token = csrfTokenInput.value;
+                    console.log('CSRF Token:', csrf_token);
+
+                    const fetchURL = `/personal_messages/${recipientUsername}/`;
+                    console.log('Fetch URL:', fetchURL);
+
+                    fetch(fetchURL, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrf_token,
+                        }
+                    })
+                    .then(response => {
+                        console.log('Fetch Response:', response);
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Fetch Data:', data);
+                        if (data.success) {
+                            window.location.href = `/room/${data.room_slug}/`;
+                        } else {
+                            alert('Error initiating personal chat: ' + data.error);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                } else {
+                    console.error('CSRF Token input not found.');
+                }
+            }
+        }
+    </script>
+{% endblock %}
+</body>
+</html>
