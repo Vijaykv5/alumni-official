@@ -6,13 +6,4 @@
 <div class="p-10 lg:p-20 text-center">
     <h1 class="text-3xl lg:text-6xl text-white">Djangochat</h1>
 </div>
-
-<div class="modal">
-    {% for friend in friends %}
-    <div class="friend-card">
-        <p class="username">{{friend.username}}</p>
-        <a href="{% url 'create_private_room' friend.id %}">Connect</a>
-    </div>
-    {% endfor %}
-</div>
 {% endblock %}

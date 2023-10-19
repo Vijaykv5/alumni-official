@@ -1,0 +1,45 @@
+POST http://127.0.0.1:8000/api/login/
+Content-Type: application/json
+
+{"username": "elviin", "password":"Twinkle2503*"}
+
+###
+
+POST http://127.0.0.1:8000/api/signup/
+Content-Type: application/json
+
+{"username": "elviin", "password":"Twinkle2503*", "email":"zack@gmail.com"}
+
+###
+
+GET http://127.0.0.1:8000/api/test-token/
+Content-Type: application/json
+Authorization: Token 76b2ffa50794aa43fedacb5462e3d1ca15ffbca6
+
+{}
+
+###
+
+POST http://127.0.0.1:8000/api/comment-post/1/
+Content-Type: application/json
+Authorization: Token 76b2ffa50794aa43fedacb5462e3d1ca15ffbca6
+
+{
+    "text":"Hello World"
+}
+
+###
+
+GET http://127.0.0.1:8000/api/get-feed-posts/
+Content-Type: application/json
+Authorization: Token 76b2ffa50794aa43fedacb5462e3d1ca15ffbca6
+
+{}
+
+###
+
+GET http://127.0.0.1:8000/api/get-feed-posts/
+Content-Type: application/json
+Authorization: Token 76b2ffa50794aa43fedacb5462e3d1ca15ffbca6
+
+{}

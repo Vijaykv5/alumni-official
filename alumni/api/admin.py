@@ -6,6 +6,7 @@ admin.site.register(Account)
 admin.site.register(Student)
 admin.site.register(Faculty)
 
+admin.site.register(Like)
 admin.site.register(Comment)
 admin.site.register(Job)
 admin.site.register(Post)

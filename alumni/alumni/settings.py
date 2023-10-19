@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'core',
     'room',
     'rest_framework',
+    'rest_framework.authtoken',
     'api',
 ]
 
