@@ -17,6 +17,10 @@ from rest_framework.permissions import IsAuthenticated
 
 from django.db.models import Q
 
+from room.models import Room, Message
+from room.forms import RoomCreationForm, GroupCreationForm
+from django.utils.crypto import get_random_string
+
 @api_view(['GET'])
 def apiOverview(request):
     api_urls = {
@@ -49,6 +53,7 @@ def login(request):
         return Response({"detail":"Not Found"}, status=status.HTTP_404_NOT_FOUND)
     token, created = Token.objects.get_or_create(user=user)
     serializer = UserSerializer(instance=user)
+    print("User logged in")
     return Response({"token":token.key, "user":serializer.data})
 
 @api_view(['POST'])
@@ -129,6 +134,7 @@ def getAccountPosts(request, pk):
 def getFeedPosts(request):
     posts = Post.objects.all().order_by('date_created')
     serializer = PostSerializer(posts, many=True)
+    print(serializer.data)
     return Response(serializer.data)
 
 @api_view(['POST'])
@@ -173,10 +179,10 @@ def likePost(request, pk):
 
     if post.likes.filter(account=account).exists():
         post.likes.filter(account=account).delete()
-        return Response('Post unliked')
+        return Response(post.likes.count())
     else:
         post.likes.create(account=account)
-        return Response('Post liked')   
+        return Response(post.likes.count())   
 
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
@@ -204,3 +210,59 @@ def deletePost(request, pk):
     post.delete()
 
     return Response('Post successfully deleted!')
+
+# Chat
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def create_private_room(request, pk):
+    user1 = request.user
+    user2 = User.objects.get(id=pk)
+    name = user1.username + user2.username
+    slug = get_random_string(8,'0123456789')
+    # if not Room.objects.filter(users__in=[user1, user2]).exists():
+    room = Room.objects.create(name=name, slug=slug, type="Direct")
+    room.users.add(user1)
+    room.users.add(user2)
+
+    messages = Message.objects.filter(room=room)[0:25]
+
+    return JsonResponse({'room': room, 'messages': messages})
+
+    # return render(request, 'room/room.html', {'room': room, 'messages': messages})
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_private_room(request, pk):
+    room = Room.objects.get(id = pk)
+
+    messages = Message.objects.filter(room=room)[0:25]
+
+    return JsonResponse({'room': room, 'messages': messages})
+
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def create_group_room(request):
+    if request.method == 'POST':
+        form = GroupCreationForm(request.POST)
+        if form.is_valid():
+            room = form.save()
+            room.type = 'Group'
+            room.slug = get_random_string(8,'0123456789')
+            room.save()
+            return redirect('room', slug=room.slug)
+    else:
+        form = GroupCreationForm()
+    return render(request, 'room/create_room.html', {'form': form})
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_group_room(request, pk):
+    room = Room.objects.get(id = pk)
+
+    messages = Message.objects.filter(room=room)[0:25]
+
+    return JsonResponse({'room': room, 'messages': messages})

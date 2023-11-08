@@ -1,7 +1,7 @@
 POST http://127.0.0.1:8000/api/login/
 Content-Type: application/json
 
-{"username": "elviin", "password":"Twinkle2503*"}
+{"username": "vijaykv", "password":"admin1234@"}
 
 ###
 
@@ -38,8 +38,16 @@ Authorization: Token 76b2ffa50794aa43fedacb5462e3d1ca15ffbca6
 
 ###
 
-GET http://127.0.0.1:8000/api/get-feed-posts/
+POST http://127.0.0.1:8000/api/like-post/3/
 Content-Type: application/json
-Authorization: Token 76b2ffa50794aa43fedacb5462e3d1ca15ffbca6
+Authorization: Token 78af7dc45adb5f8265f995872a506c693ff98fcc
+
+{}
+
+###
+
+POST http://127.0.0.1:8000/api/get-profile/
+Content-Type: application/json
+Authorization: Token 78af7dc45adb5f8265f995872a506c693ff98fcc
 
 {}
