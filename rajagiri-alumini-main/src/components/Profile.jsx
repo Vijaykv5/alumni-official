@@ -10,6 +10,7 @@ const Profile = () => {
 
   let posts = [
     {
+      
       id: 4,
       image: "/IMG_0740.JPG",
       caption: "Farewell",
