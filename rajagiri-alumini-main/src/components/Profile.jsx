@@ -6,7 +6,7 @@ import Profile1 from './Profile1'
 
 
 const Profile = () => {
-  const token = "76b2ffa50794aa43fedacb5462e3d1ca15ffbca6"
+  let token = "76b2ffa50794aa43fedacb5462e3d1ca15ffbca6"
 
   let posts = [
     {
