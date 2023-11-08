@@ -35,6 +35,7 @@ const App = () => {
 
   return (
     <div>
+    <h1>Hi</h1>
       <Navbar />
       <div className=' h-fit flex'>
         <div className="w-1/5 h-full flex flex-col pt-12 items-center rounded-lg mx-12 my-9">

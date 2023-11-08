@@ -1,6 +1,22 @@
 import React from 'react';
 
 const profile1= () => {
+  let data = {
+    "id": 2,
+    "profilePicture": "/20230604_140354.jpg",
+    "firstName": "Vijay",
+    "lastName": "K V",
+    "dateOfBirth": "2003-11-05",
+    "age": 21,
+    "mobileNumber": "1234567890",
+    "emailID": "zack@gmail.com",
+    "user": 8,
+    "followers": [],
+    "following": []
+    }
+
+    let posts = []
+
   return (
     <div className="mt-8 rounded-lg text-white">
       {/* Cover Photo Section */}

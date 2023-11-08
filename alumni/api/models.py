@@ -4,6 +4,8 @@ import uuid
 from django.contrib.auth.models import User
 from datetime import date
 
+from room.models import *
+
 # Accounts
 class Account(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)

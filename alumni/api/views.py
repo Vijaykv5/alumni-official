@@ -221,11 +221,13 @@ def create_private_room(request, pk):
     name = user1.username + user2.username
     slug = get_random_string(8,'0123456789')
     # if not Room.objects.filter(users__in=[user1, user2]).exists():
-    room = Room.objects.create(name=name, slug=slug, type="Direct")
+    room = Room.objects.get_or_create(name=name, slug=slug, type="Direct")
     room.users.add(user1)
     room.users.add(user2)
 
     messages = Message.objects.filter(room=room)[0:25]
+
+    
 
     return JsonResponse({'room': room, 'messages': messages})
 

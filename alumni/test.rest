@@ -46,8 +46,111 @@ Authorization: Token 78af7dc45adb5f8265f995872a506c693ff98fcc
 
 ###
 
-POST http://127.0.0.1:8000/api/get-profile/
+GET http://127.0.0.1:8000/api/get-profile/
 Content-Type: application/json
 Authorization: Token 78af7dc45adb5f8265f995872a506c693ff98fcc
 
 {}
+
+###
+
+GET http://127.0.0.1:8000/api/get-account-info/2/
+Content-Type: application/json
+Authorization: Token 78af7dc45adb5f8265f995872a506c693ff98fcc
+
+{}
+
+###
+
+GET http://127.0.0.1:8000/api/get-account-posts/2/
+Content-Type: application/json
+Authorization: Token 78af7dc45adb5f8265f995872a506c693ff98fcc
+
+{}
+
+###
+
+GET http://127.0.0.1:8000/api/get-feed-posts/
+Content-Type: application/json
+Authorization: Token 78af7dc45adb5f8265f995872a506c693ff98fcc
+
+{}
+
+###
+
+POST http://127.0.0.1:8000/api/create-post/
+Content-Type: application/json
+Authorization: Token 78af7dc45adb5f8265f995872a506c693ff98fcc
+
+{
+    "image": "/IMG-20220815-WA0001.jpg",
+    "caption": "Vijay and family",
+}
+
+###
+
+GET http://127.0.0.1:8000/api/get-post/3/
+Content-Type: application/json
+Authorization: Token 78af7dc45adb5f8265f995872a506c693ff98fcc
+
+{}
+
+###
+
+POST http://127.0.0.1:8000/api/edit-post/3/
+Content-Type: application/json
+Authorization: Token 78af7dc45adb5f8265f995872a506c693ff98fcc
+
+{
+  "id": 3,
+  "image": "/IMG-20220815-WA0001.jpg",
+  "caption": "Raghav's family",
+  "date_created": "2023-11-05T07:19:03.090427Z",
+  "account": 2,
+  "likes": [],
+  "comments": []
+}
+
+###
+
+POST http://127.0.0.1:8000/api/like-post/3/
+Content-Type: application/json
+Authorization: Token 78af7dc45adb5f8265f995872a506c693ff98fcc
+
+{}
+
+###
+
+POST http://127.0.0.1:8000/api/comment-post/3/
+Content-Type: application/json
+Authorization: Token 78af7dc45adb5f8265f995872a506c693ff98fcc
+
+{
+    "text":"So happy for you"
+}
+
+###
+
+GET http://127.0.0.1:8000/api/get-comment/2/
+Content-Type: application/json
+Authorization: Token 78af7dc45adb5f8265f995872a506c693ff98fcc
+
+{}
+
+###
+
+DELETE http://127.0.0.1:8000/api/delete-post/3/
+Content-Type: application/json
+Authorization: Token 78af7dc45adb5f8265f995872a506c693ff98fcc
+
+{}
+
+###
+
+POST http://127.0.0.1:8000/api/create-private-room/8/
+Content-Type: application/json
+Authorization: Token 78af7dc45adb5f8265f995872a506c693ff98fcc
+
+{}
+
+###
