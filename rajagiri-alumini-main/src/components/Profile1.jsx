@@ -38,8 +38,8 @@ const profile1= () => {
 
       {/* Profile Info Section */}
       <div className="mt-20 px-4">
-        <h1 className="text-3xl font-semibold text-gray-800">Vijay Kv</h1>
-        <p className="text-gray-600">Software Engineer</p>
+        <h1 className="text-3xl font-semibold text-gray-800">{data.firstName}{data.lastName}</h1>
+        <p className="text-gray-600">{data.mobileNumber}</p>
         <p className="text-gray-600 text-sm">Silicon Valley, California</p>
       </div>
       <div className="flex space-x-4 ml-4 mt-2">
