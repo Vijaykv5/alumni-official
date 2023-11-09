@@ -21,6 +21,10 @@ class Account(models.Model):
     mobileNumber = models.CharField('Mobile Number', max_length=13, null=True)
     emailID = models.EmailField('Email Address', null=True)
 
+    
+    role = models.CharField('Role', max_length=255, null=True)
+    location = models.CharField('Location', max_length=255, null=True)
+
     # Followers
     followers = models.ManyToManyField('self', blank=True)
     following = models.ManyToManyField('self', blank=True)

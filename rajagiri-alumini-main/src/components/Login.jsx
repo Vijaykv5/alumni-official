@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useRef } from 'react';
 
+const errorss =useRef(null);
 const Login = () => {
     const [token, setToken] = useState("");
     const [posts, setPosts] = useState([]);
@@ -15,23 +17,26 @@ const Login = () => {
   const validationSchema = Yup.object().shape({
     username: Yup.string().required('Username is required'),
     password: Yup.string().required('Password is required'),
+    
   });
 
   const handleSubmit = (values) => {
     localStorage.setItem('username', values.username);
     localStorage.setItem('password', values.password);
-
-  };
-
-  useEffect(() => {
     axios
-      .post("http://localhost:8000/api/login/", { "username": "vijaykv", "password": "admin1234@" })
+      .post("http://localhost:8000/api/login/", { "username":values.username , "password":values.password })
       .then(res => {
         console.log(res.data);
         //setToken(res.data.token);
       })
-      .catch(err => console.log("Error :", err));
-  }, []);
+      .catch(
+       
+      );
+  };
+
+  // useEffect(() => {
+    
+  // }, []);
 
   useEffect(() => {
     if (token) {
@@ -89,6 +94,7 @@ const Login = () => {
               >
                 Login
               </button>
+              <p ref={error} className='text-red'></p>
             </div>
           </Form>
         )}
