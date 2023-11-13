@@ -9,15 +9,15 @@ const App = () => {
   const [token, setToken] = useState("");
   const [posts, setPosts] = useState([]);
 
-  // useEffect(() => {
-  //   axios
-  //     .post("http://localhost:8000/api/login/", { "username": "vijaykv", "password": "admin1234@" })
-  //     .then(res => {
-  //       console.log(res.data);
-  //       setToken(res.data.token);
-  //     })
-  //     .catch(err => console.log("Error :", err));
-  // }, []);
+  useEffect(() => {
+    axios
+      .post("http://localhost:8000/api/login/", { "username": "vijaykv", "password": "admin1234@" })
+      .then(res => {
+        console.log(res.data);
+        setToken(res.data.token);
+      })
+      .catch(err => console.log("Error :", err));
+  }, []);
 
   useEffect(() => {
     if (token) {
