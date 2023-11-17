@@ -27,11 +27,4 @@ urlpatterns = [
     path('comment-post/<int:pk>/', views.commentPost, name="commentPost"),
     path('get-comment/<int:pk>/', views.getComment, name="getComment"),
     path('delete-post/<int:pk>/', views.deletePost, name="deletePost"),
-
-    # Chat
-    path('create-private-room/<int:pk>/', views.create_private_room, name="create_private_room"),
-    path('get-private-room/<int:pk>/', views.get_private_room, name="get_private_room"),
-    path('create-private-room/', views.create_group_room, name="create_group_room"),
-    path('get-group-room/<int:pk>/', views.get_group_room, name="get_group_room"),
-
 ]

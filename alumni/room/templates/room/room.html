@@ -1,33 +1,81 @@
-{% extends 'core/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni | Chat</title>
+    <link rel="stylesheet" href="{% static '/css/chat.css' %}">
+</head>
+<body>
+    <nav>
+        <img src="{% static 'img/logorset.png' %}" alt="logo" class="logo">
+        <input type="text" placeholder="Search" >
+        <div class="btn-nav-group">
+            <a href="#" class="btn-nav">Home</a>
+            <a href="#" class="btn-nav">Jobs</a>
+            <a href="#" class="btn-nav">Chats</a>
+        </div>
+        <a href="#" class="btn-profile">
+            <img class="profile" src="{% static 'img/emoji.png' %}" alt="profile" class="profile-pic">
+        </a>
+    </nav>
 
-{% block title %}{{ room.name }} | {% endblock %}
+    <div class="container">
+        <div class="chats-container">
+            <h3>Chat</h3>
+            <input type="text" class="input-chat-search">
+            <div class="chat-list">
+                {% for room in rooms %}
+                <a class="chat-card-container" href="{% url 'room' room.slug %}">
+                    <img class="profile" src="{% static 'img/emoji.png' %}" alt="person" class="person-img">
+                    <div class="person-info">
+                        <p class="person-name">{{room.name}}</p>
+                        <p class="last-message">dsfjhkdshksjdf</p>
+                    </div>
+                    <div class="chat-status">
+                        <p class="time">5:56 pm</p>
+                        <p class="unread-count">3</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
 
-{% block content %}
-<div class="p-10 lg:p-20 text-center">
-    <h1 class="text-3xl lg:text-6xl text-white">{{ room.name }}</h1>
-</div>
+            <div class="create-btn-group">
+                <a class="btn-create-conv" href="{% url 'peopleList' %}">Create Conversation</a>
+                <a class="btn-create-group" href="{% url 'create_group_room' %}">Create Group</a>
+                <!-- <button class="btn-create"><img class="icon" src="{% static 'img/create.png' %}" alt="create icon"></button> -->
+            </div>
+        </div>
 
-<div class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
-    <div class="chat-messages space-y-3" id="chat-messages">
-        {% for m in messages %}<b>{{ m.user.username }}</b>: {{ m.content }}<br>{% endfor %}
+        <div class="chat">
+            <div class="message-container">
+                {% for m in messages %}
+                <div class="message {% if m.user.username == request.user.username %}sent-message{% else %}rec-message{% endif %}">
+                    <img class="profile" src="{% static 'img/emoji.png' %}" alt="sent image">
+                    <div class="message-content">
+                        {% if m.user.username != request.user.username %}<p>{{ m.user.username }}</p>{% endif %}
+                        <p>{{ m.content }}</p>
+                        <p class="time">{{ m.date_added }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <form class="input-container" method="post" action=".">
+                <input type="text" class="input-msg" name="content" placeholder="Your message..." id="chat-message-input">
+                <button id="chat-message-submit" type="submit" class="btn-submit"><img class="icon" src="{% static 'img/send.png' %}" alt="Send Button"></button>
+            </form>
+        </div>
     </div>
-</div>
 
-<div class="lg:w-2/4 mt-6 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
-    <form method="post" action="." class="flex">
-        <input type="text" name="content" class="flex-1 mr-3" placeholder="Your message..." id="chat-message-input">
+</body>
 
-        <button 
-            class="px-5 py-3 rounded-xl text-white bg-teal-600 hover:bg-teal-700"
-            id="chat-message-submit"
-        >Submit</button>
-    </form>
-</div>
-{% endblock %}
 
 {% block scripts %}
 {{ room.slug|json_script:"json-roomname" }}
 {{ request.user.username|json_script:"json-username" }}
+{% endblock %}
 
 <script>
     const roomName = JSON.parse(document.getElementById('json-roomname').textContent);
@@ -71,7 +119,7 @@
         }));
 
         messageInputDom.value = '';
-
+        location.reload()
         return false;
     };
 
@@ -92,4 +140,4 @@
     scrollToBottom();
 </script>
 
-{% endblock %}
+</html>

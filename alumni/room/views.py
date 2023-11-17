@@ -19,20 +19,50 @@ def rooms(request):
 
 @login_required
 def room(request, slug):
+    rooms = Room.objects.filter(users=request.user)
+    friends = User.objects.all()
+
     room = Room.objects.get(slug=slug)
+    
+    name = room.name
+
+    if room.type == "Direct":
+        for user in room.users.all():
+            print(user.username)
+            if user.username != request.user.username:
+                name = user.username
+
     messages = Message.objects.filter(room=room)[0:25]
-    return render(request, 'room/room.html', {'room': room, 'messages': messages})
+
+    context = {
+        'name': name, 
+        'room': room, 
+        'messages': messages,
+        'rooms':rooms,
+        'friends':friends,
+        }
+
+    return render(request, 'room/room.html', context)
+
+# @login_required
+# def create_room(request):
+#     if request.method == 'POST':
+#         form = RoomCreationForm(request.POST)
+#         if form.is_valid():
+#             room = form.save()
+#             return redirect('room', slug=room.slug)
+#     else:
+#         form = RoomCreationForm()
+#     return render(request, 'room/create_room.html', {'form': form})
 
 @login_required
-def create_room(request):
-    if request.method == 'POST':
-        form = RoomCreationForm(request.POST)
-        if form.is_valid():
-            room = form.save()
-            return redirect('room', slug=room.slug)
-    else:
-        form = RoomCreationForm()
-    return render(request, 'room/create_room.html', {'form': form})
+def peopleList(request):
+    users = User.objects.all()
+    context = {
+        'users':users,
+    }
+
+    return render(request, 'room/peopleList.html', context)
 
 @login_required
 def create_private_room(request, pk):
@@ -44,10 +74,7 @@ def create_private_room(request, pk):
     room = Room.objects.create(name=name, slug=slug, type="Direct")
     room.users.add(user1)
     room.users.add(user2)
-
-    messages = Message.objects.filter(room=room)[0:25]
-
-    return render(request, 'room/room.html', {'room': room, 'messages': messages})
+    return redirect('room', slug=room.slug)
     
 @login_required
 def create_group_room(request):
@@ -61,4 +88,5 @@ def create_group_room(request):
             return redirect('room', slug=room.slug)
     else:
         form = GroupCreationForm()
-    return render(request, 'room/create_room.html', {'form': form})
+
+    return render(request, 'room/groupForm.html', {'form': form})

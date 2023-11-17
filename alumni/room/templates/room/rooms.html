@@ -1,31 +1,77 @@
-{% extends 'core/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni | Chat</title>
+    <link rel="stylesheet" href="{% static '/css/chat.css' %}">
+</head>
+<body>
+    <nav>
+        <img src="{% static 'img/logorset.png' %}" alt="logo" class="logo">
+        <input type="text" placeholder="Search" >
+        <div class="btn-nav-group">
+            <a href="#" class="btn-nav">Home</a>
+            <a href="#" class="btn-nav">Jobs</a>
+            <a href="#" class="btn-nav">Chats</a>
+        </div>
+        <a href="#" class="btn-profile">
+            <img class="profile" src="{% static 'img/emoji.png' %}" alt="profile" class="profile-pic">
+        </a>
+    </nav>
 
-{% block title %}Rooms | {% endblock %}
+    <div class="container">
+        <div class="chats-container">
+            <h3>Chat</h3>
+            <input type="text" class="input-chat-search">
+            <div class="chat-list">
+                {% for room in rooms %}
+                <a class="chat-card-container" href="{% url 'room' room.slug %}">
+                    <img class="profile" src="{% static 'img/emoji.png' %}" alt="person" class="person-img">
+                    <div class="person-info">
+                        <p class="person-name">{{room.name}}</p>
+                        <p class="last-message">dsfjhkdshksjdf</p>
+                    </div>
+                    <div class="chat-status">
+                        <p class="time">5:56 pm</p>
+                        <p class="unread-count">3</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
 
-{% block content %}
-<div class="p-10 lg:p-20 text-center">
-    <h1 class="text-3xl lg:text-6xl text-white">Rooms</h1>
-    <a href="{% url 'create_group_room' %}" class="px-5 py-3 block rounded-xl text-white bg-teal-600 hover:bg-teal-700">Create New Group</a>
-</div>
+            <div class="create-btn-group">
+                <a class="btn-create-conv" href="{% url 'peopleList' %}">Create Conversation</a>
+                <a class="btn-create-group" href="{% url 'create_group_room' %}">Create Group</a>
+                <!-- <button class="btn-create"><img class="icon" src="{% static 'img/create.png' %}" alt="create icon"></button> -->
+            </div>  
+        </div>
 
-<div class="w-full flex flex-wrap items-center">
-    {% for room in rooms %}
-        <div class="w-full lg:w-1/4 px-3 py-3">
-            <div class="p-4 bg-white shadow rounded-xl text-center">
-                <h2 class="mb-5 text-2xl font-semibold">{{ room.name }} | {{room.type}}</h2>
+        <div class="chat">
+            <div class="message-container">
+                <div class="message sent-message">
+                    <img class="profile" src="{% static 'img/emoji.png' %}" alt="sent image">
+                    <div class="message-content">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                        <p class="time">5:56 pm</p>
+                    </div>
+                </div>
+                <div class="message rec-message">
+                    <img class="profile" src="{% static 'img/emoji.png' %}" alt="rec image">
+                    <div class="message-content">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                        <p class="time">5:56 pm</p>
+                    </div>
+                </div>
+            </div>
 
-                <a href="{% url 'room' room.slug %}" class="px-5 py-3 block rounded-xl text-white bg-teal-600 hover:bg-teal-700">Join</a>
+            <div class="input-container">
+                <input type="text" class="input-msg">
+                <button type="submit" class="btn-submit"><img class="icon" src="{% static 'img/send.png' %}" alt="Send Button"></button>
             </div>
         </div>
-    {% endfor %}
-</div>
-
-<div class="modal">
-    {% for friend in friends %}
-    <div class="friend-card">
-        <p class="username">{{friend.username}}</p>
-        <a href="{% url 'create_private_room' friend.id %}">Connect</a>
     </div>
-    {% endfor %}
-</div>
-{% endblock %}
+
+</body>
+</html>
