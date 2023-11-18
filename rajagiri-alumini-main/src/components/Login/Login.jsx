@@ -11,6 +11,7 @@ const Login = () => {
   const navigate = useNavigate()
   const [token, setToken] = useState("");
   const [posts, setPosts] = useState([]);
+  const [loged,setLoged]=useState(true);
 
   const initialValues = {
     username: "",
@@ -31,21 +32,22 @@ const Login = () => {
         password: values.password,
       })
       .then((res) => {
-        console.log(res.data);
+        console.log('hi',res);
+        setLoged(true);
         localStorage.setItem("token", res.data.token);
+        navigate('/');
       })
-      .catch();
+      .catch(
+         (e)=>{
+          navigate('/login')
+          setLoged(false)
+          console.log('hi',e)
+        }
+      );
+      
   };
 
-  const logged=()=>{
-    var s=localStorage.getItem('token');
-    if(s){
-      navigate('/');
-    }
-    else{
-      return null;
-    }
-  }
+
   // useEffect(() => {
 
   // }, []);
@@ -119,14 +121,16 @@ const Login = () => {
             </div>
             <div className="flex items-center justify-center">
              <button
-             onClick={logged}
+            
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 Login
               </button>
             </div>
-            <p className="text-red text-center mt-4 ">Not logged in </p>
+            {!loged && !localStorage.getItem("token") && (
+              <p className="text-red-500 text-center mt-4 ">User Not Found</p>
+            )}
           </Form>
         )}
       </Formik>

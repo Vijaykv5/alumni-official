@@ -1,6 +1,7 @@
 import React from 'react';
 
 const ProfileCard = () => {
+  const name =localStorage.getItem('username')
   return (
     <div className="w-1/5 h-full flex flex-col pt-12 items-center rounded-lg mx-12 my-9">
       <img
@@ -9,7 +10,7 @@ const ProfileCard = () => {
         className="w-16 h-16 rounded-full mb-4"
       />
 
-     <h2 className="text-xl font-semibold">Welcome, User! </h2>
+     <h2 className="text-xl font-semibold">Welcomb,{name} </h2>
       
     </div>
   );

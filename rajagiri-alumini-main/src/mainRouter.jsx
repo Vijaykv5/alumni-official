@@ -5,6 +5,7 @@ import Profile from './components/Profile';
 import Chat from './components/Chat/Chat';
 import Login from './components/Login/Login';
 import PrivateRoute from './PrivateRoute';
+import Error from './components/Error/Error';
 
 const MainRouter = () => {
   return (
@@ -16,6 +17,9 @@ const MainRouter = () => {
         <Route path="/" element={<PrivateRoute><App /></PrivateRoute>} />
         <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
         <Route path="/chat" element={<Chat />} />
+        
+
+        <Route path='*' element={<Error/>}/>
         
       </Routes>
     </Router>
