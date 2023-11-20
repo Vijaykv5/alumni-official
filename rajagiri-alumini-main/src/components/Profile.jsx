@@ -1,45 +1,46 @@
-import React from 'react'
-import ProfileRightCard from './ProfileRightCard'
-import MainCard from './mainCard'
-import Navbar from './Navbar'
-import Profile1 from './Profile1'
-
+import React, { useEffect, useState } from 'react';
+import ProfileRightCard from './ProfileRightCard';
+import MainCard from './mainCard';
+import Navbar from './Navbar';
+import Profile1 from './Profile1';
+import axios from 'axios';
 
 const Profile = () => {
-  let token = "76b2ffa50794aa43fedacb5462e3d1ca15ffbca6"
+  const [posts, setPosts] = useState([]);
+  const [token, setToken] = useState(localStorage.getItem('token'));
 
-  let posts = [
-    {
-      
-      id: 4,
-      image: "/IMG_0740.JPG",
-      caption: "Farewell",
-      date_created: "2023-11-08T14:22:33.270095Z",
-      account: 2,
-      likes: [],
-      comments: []
-    }
-  ];
+  useEffect(() => {
+    // Fetch data from the API
+    const fetchData = async () => {
+      try {
+        const config = { headers: { 'Authorization': `token ${token}` } };
+        const response = await axios.get('http://127.0.0.1:8000/api/get-profile/', config);
+        setPosts(response.data);
+        console.log(response);
+      } catch (error) {
+        console.log('Error fetching data:', error);
+      }
+    };
+
+    // Call the fetch function
+    fetchData();
+  }, []); // Empty dependency array to run only once on component mount
 
   return (
     <div>
-      <Navbar/>
-    
-    <div className='flex  '>
-      
+      <Navbar />
+      <div className='flex'>
         <div className='flex flex-col w-[50%] ml-40'>
-        <Profile1/>
-        <h2 className="text-2xl ml-4 pt-4 font-semibold text-gray-800">Posts</h2>
-          {posts.map(post => (
-            <MainCard  token={token} post={post}/>
-        
-          ))}
-         
+          <Profile1 />
+          <h2 className='text-2xl ml-4 pt-4 font-semibold text-gray-800'>Posts</h2>
+          {/* {posts.map((post) => (
+            <MainCard key={post.id} token={token} post={post} />
+          ))} */}
         </div>
-        <ProfileRightCard/>
-        </div>
+        <ProfileRightCard />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

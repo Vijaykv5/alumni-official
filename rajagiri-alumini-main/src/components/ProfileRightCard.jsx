@@ -1,6 +1,20 @@
-import React from 'react';
+import React from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Notifications = () => {
+  const friend=()=>{
+    toast.success(" Added Friend sucessfully!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  }
   return (
     <div className="w-[80%] h-fit bg-white flex flex-col pt-7 rounded-lg mx-12 my-9 ">
       <h1 className="text-xl px-4">Notifications</h1>
@@ -21,7 +35,7 @@ export const Notifications = () => {
           </div>
           <div className="flex-grow"></div>
           <button className="w-8 h-8 bg-gray-300 rounded-md flex items-center justify-center absolute right-4 top-4">
-            <img src='https://i.ibb.co/BVMmBsK/accept.png"'/>
+            <img src='https://i.ibb.co/BVMmBsK/accept.png"' />
           </button>
         </div>
         <div className="relative bg-white rounded-lg border border-gray-300 p-2 flex items-center space-x-2">
@@ -38,7 +52,7 @@ export const Notifications = () => {
           </div>
           <div className="flex-grow"></div>
           <button className="w-8 h-8 bg-gray-300 rounded-md flex items-center justify-center absolute right-4 top-4">
-            <img src='https://i.ibb.co/BVMmBsK/accept.png"'/>
+            <img src='https://i.ibb.co/BVMmBsK/accept.png"' />
           </button>
         </div>
         <div className="relative bg-white rounded-lg border border-gray-300 p-2 flex items-center space-x-2">
@@ -54,19 +68,28 @@ export const Notifications = () => {
             </span>
           </div>
           <div className="flex-grow"></div>
-          <button className="w-8 h-8 bg-gray-300 rounded-md flex items-center justify-center absolute right-4 top-4">
-            <img src='https://i.ibb.co/BVMmBsK/accept.png"'/>
+          <button className="w-8 h-8 bg-gray-300 rounded-md flex items-center justify-center absolute right-4 top-4 " onClick={friend}>
+            <img src='https://i.ibb.co/BVMmBsK/accept.png"' />
           </button>
         </div>
-
-
- 
       </div>
     </div>
   );
 };
 const ProfileRightCard = () => {
-  const names = ['Elvin Thomas', 'Gautham', 'Godwin Gino', 'Vijay KV'];
+  const connect=()=>{
+  toast.success(" connection set sucessfully!", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+}
+  const names = ["Elvin Thomas", "Gautham", "Godwin Gino", "Vijay KV"];
 
   return (
     <div className="flex flex-col ">
@@ -90,7 +113,10 @@ const ProfileRightCard = () => {
                 </span>
               </div>
               <div className="flex-grow"></div>
-              <button className="w-10 h-8 bg-gray-300 rounded-md flex items-center justify-center  right-4 top-4">
+              <button
+                className="w-10 h-8 bg-gray-300 rounded-md flex items-center justify-center  right-4 top-4"
+                onClick={connect}
+              >
                 +
               </button>
             </div>
@@ -101,9 +127,22 @@ const ProfileRightCard = () => {
       <div className="flex flex-col rounded-lg">
         <Notifications />
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {/* Same as */}
+      <ToastContainer />
     </div>
   );
 };
-
 
 export default ProfileRightCard;
