@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 
 from rest_framework.decorators import api_view
@@ -143,6 +143,7 @@ def getFeedPosts(request):
 def createPost(request):
     account = Account.objects.get(user=request.user)
     post = Account.objects.create(account=account)
+    posts = Post.objects.all().order_by('date_created')
     serializer = PostSerializer(instance=post, data=request.data)
 
     if serializer.is_valid():
@@ -192,7 +193,15 @@ def commentPost(request, pk):
     post = Post.objects.get(id=pk)
     comment = Comment.objects.create(account=account, text=request.data['text'])
     post.comments.add(comment) 
-    return Response('Comment posted')   
+    return Response('Comment posted')    
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def getPostComments(request, pk):
+    post = Post.objects.get(id=pk)
+    serializer = CommentSerializer(post.comments_list, many=True)
+    return Response(serializer.data)   
 
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
