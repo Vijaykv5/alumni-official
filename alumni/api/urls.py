@@ -25,6 +25,7 @@ urlpatterns = [
     path('edit-post/<int:pk>/', views.editPost, name="editPost"),
     path('like-post/<int:pk>/', views.likePost, name="likePost"),
     path('comment-post/<int:pk>/', views.commentPost, name="commentPost"),
+    path('get-post-comments/<int:pk>/', views.getPostComments, name="getPostComments"),
     path('get-comment/<int:pk>/', views.getComment, name="getComment"),
     path('delete-post/<int:pk>/', views.deletePost, name="deletePost"),
 ]
