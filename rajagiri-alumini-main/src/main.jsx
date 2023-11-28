@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import MainRouter from './mainRouter';  // Change the import statement
+import MainRouter from './mainRouter'; 
 import Login from './components/Login/Login';
 
 const Main= () => {

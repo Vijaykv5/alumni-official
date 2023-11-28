@@ -48,10 +48,6 @@ const Login = () => {
   };
 
 
-  // useEffect(() => {
-
-  // }, []);
-
   useEffect(() => {
     if (token) {
       const config = { headers: { Authorization: "token " + token } };
@@ -65,6 +61,7 @@ const Login = () => {
         .catch((err) => console.log(err));
     }
   }, [token]);
+  
 
   return (
     <div className="flex justify-center items-center h-screen">

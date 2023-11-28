@@ -1,21 +1,30 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
 const profile1= () => {
-  let data = {
-    "id": 2,
-    "profilePicture": "/20230604_140354.jpg",
-    "firstName": "Vijay",
-    "lastName": "K V",
-    "dateOfBirth": "2003-11-05",
-    "age": 21,
-    "mobileNumber": "1234567890",
-    "emailID": "zack@gmail.com",
-    "user": 8,
-    "followers": [],
-    "following": []
-    }
+    const [posts, setPosts] = useState([]);
+    const [token, setToken] = useState(localStorage.getItem('token'));
+  
+    useEffect(() => {
+      // Fetch data from the API
+      const fetchData = async () => {
+        try {
+          const config = { headers: { 'Authorization': `token ${token}` } };
+          const response = await axios.get('http://127.0.0.1:8000/api/get-profile/', config);
+          setPosts(response.data);
+          console.log(response);
+        } catch (error) {
+          console.log('Error fetching data:', error);
+        }
+      };
+  
+      // Call the fetch function
+      fetchData();
+    }, []); // Empty dependency array to run only once on component mount
+  const {firstName,lastName,emailID,dateOfBirth,age,location,role,followers,following,profilePicture}=posts;
+  console.log(posts);
+  console.log(firstName);
 
-    let posts = []
 
   return (
     <div className="mt-8 rounded-lg text-white">
@@ -38,16 +47,16 @@ const profile1= () => {
 
       {/* Profile Info Section */}
       <div className="mt-20 px-4">
-        <h1 className="text-3xl font-semibold text-gray-800">{data.firstName}{data.lastName}</h1>
-        <p className="text-gray-600">{data.mobileNumber}</p>
-        <p className="text-gray-600 text-sm">Silicon Valley, California</p>
+        <h1 className="text-3xl font-semibold text-gray-800">{firstName} {lastName}</h1>
+        <p className="text-gray-600"></p>
+        <p className="text-gray-600 text-sm">{location}</p>
       </div>
       <div className="flex space-x-4 ml-4 mt-2">
         <div className="text-center">
           <p className="text-gray-800 font-semibold">10 Posts</p>
         </div>
         <div className="text-center">
-          <p className="text-gray-800 font-semibold">600 Connections</p>
+          <p className="text-gray-800 font-semibold">{followers} connections</p>
         </div>
       </div>
       

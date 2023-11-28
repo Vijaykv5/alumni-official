@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./components/Navbar";
-import MainCard from "./components/mainCard";
+import Navbar from "./components/Navbar/Navbar";
+import MainCard from "./components/MainCard";
 import ProfileRightCard from "./components/ProfileRightCard";
 import axios from "axios";
 
@@ -9,6 +9,10 @@ const App = () => {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [posts, setPosts] = useState([]);
 
+  
+
+
+  // http://127.0.0.1:8000/api/get-comment/2/
   useEffect(() => {
     axios
       .post("http://localhost:8000/api/login/", { "username": "vijaykv", "password": "admin1234@" })
